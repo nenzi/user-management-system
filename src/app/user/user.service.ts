@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DbService } from '../db/db.service';
 import { PaginationData } from '../util/schema/pagination.schema';
+import bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -13,6 +14,9 @@ export class UserService {
     });
     if (user)
       throw new HttpException('user already exist', HttpStatus.BAD_REQUEST);
+    const salt = bcrypt.genSaltSync(10);
+
+    createUserDto.password = bcrypt.hashSync(createUserDto.password, salt);
 
     return this.db.user.create({ data: createUserDto });
   }
