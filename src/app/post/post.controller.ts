@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto, createPostSchema } from './dto/create-post.dto';
-import { ZodValidationPipe } from '../pipe/zod_validation.pipe';
+import { ZodValidationPipe } from '../util/pipe/zod_validation.pipe';
 
 @Controller('posts')
 export class PostController {

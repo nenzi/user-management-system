@@ -11,7 +11,11 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, createUserSchema } from './dto/create-user.dto';
-import { ZodValidationPipe } from '../pipe/zod_validation.pipe';
+import { ZodValidationPipe } from '../util/pipe/zod_validation.pipe';
+import {
+  PaginationData,
+  paginationSchema,
+} from '../util/schema/pagination.schema';
 
 @Controller('users')
 export class UserController {
@@ -31,10 +35,9 @@ export class UserController {
 
   @Get()
   findAll(
-    @Query('pageNumber', ParseIntPipe) number: number,
-    @Query('pageSize', ParseIntPipe) size: number
+    @Query(new ZodValidationPipe(paginationSchema)) query: PaginationData
   ) {
-    return this.userService.findAll({ pageNumber: number, pageSize: size });
+    return this.userService.findAll(query);
   }
 
   @Get('count')

@@ -16,7 +16,7 @@ import {
   CreateAddressDto,
   createAddressSchema,
 } from './dto/create-address.dto';
-import { ZodValidationPipe } from '../pipe/zod_validation.pipe';
+import { ZodValidationPipe } from '../util/pipe/zod_validation.pipe';
 
 @Controller('addresses')
 export class AddressController {

@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DbService } from '../db/db.service';
+import { PaginationData } from '../util/schema/pagination.schema';
 
 @Injectable()
 export class UserService {
@@ -16,8 +17,8 @@ export class UserService {
     return this.db.user.create({ data: createUserDto });
   }
 
-  findAll(query: { pageSize?: number; pageNumber?: number }) {
-    let { pageSize = 10, pageNumber = 1 } = query;
+  findAll(query: PaginationData) {
+    const { pageSize, pageNumber } = query;
 
     return this.db.user.findMany({
       orderBy: { createdAt: 'desc' },
